@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    h1 {
+      color: red;
+      margin-top: 20px;
+    }
+
+    form {
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      margin: auto;
+      box-shadow: 0 0 10px red;
+    }
+
+    input, textarea {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      background: red;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Admin Panel 💪</h1>
+
+<button onclick="logout()" style="background:red;color:white;padding:10px;margin:10px;">
+  Logout
+</button>
+
+<form id="productForm">
+  <input type="text" placeholder="Product Name" id="name" required>
+  <input type="number" placeholder="Price" id="price" required>
+  <input type="text" placeholder="Image URL" id="image" required>
+  <textarea placeholder="Description" id="description"></textarea>
+  <input type="text" placeholder="Category" id="category">
+  <input type="number" placeholder="Stock" id="stock">
+
+  <button type="submit">Add Product</button>
+</form>
+
+<h2>All Products</h2>
+<div id="productList"></div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
