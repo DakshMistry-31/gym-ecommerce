@@ -15,9 +15,18 @@ async function loadProducts() {
       container.innerHTML += `
         <div style="border:1px solid red; margin:10px; padding:10px; border-radius:10px;">
           <img src="${p.image}" width="200"/>
-          <h3>${p.name}</h3>
+
+          <h3>${p.name || p.category}</h3>
           <p>${p.description}</p>
           <h4>₹${p.price}</h4>
+
+          <div>
+            <button onclick="changeQty('${p._id}', -1)">➖</button>
+            <span id="qty-${p._id}">1</span>
+            <button onclick="changeQty('${p._id}', 1)">➕</button>
+          </div>
+
+          <br>
 
           <button onclick='addToCart(${JSON.stringify(p)})'>
             🛒 Add to Cart
@@ -39,17 +48,35 @@ loadProducts();
 
 
 // =======================
+// ➕➖ CHANGE QTY (HOME)
+// =======================
+function changeQty(id, change) {
+  const el = document.getElementById("qty-" + id);
+  let qty = parseInt(el.innerText);
+
+  qty += change;
+
+  if (qty < 1) qty = 1;
+
+  el.innerText = qty;
+}
+
+
+// =======================
 // 🛒 ADD TO CART
 // =======================
 function addToCart(product) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+  const qtyElement = document.getElementById("qty-" + product._id);
+  const selectedQty = qtyElement ? parseInt(qtyElement.innerText) : 1;
+
   const existing = cart.find(p => p._id === product._id);
 
   if (existing) {
-    existing.qty += 1;
+    existing.qty += selectedQty;
   } else {
-    product.qty = 1;
+    product.qty = selectedQty;
     cart.push(product);
   }
 
@@ -105,7 +132,6 @@ function showUser() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (user) {
-    // ❌ Hide Google button
     const btn = document.getElementById("googleBtn");
     if (btn) btn.style.display = "none";
 
@@ -139,7 +165,6 @@ function showUser() {
 function logoutUser() {
   localStorage.removeItem("user");
 
-  // show button again
   const btn = document.getElementById("googleBtn");
   if (btn) btn.style.display = "block";
 
@@ -147,8 +172,4 @@ function logoutUser() {
   location.reload();
 }
 
-
-// =======================
-// 🔄 AUTO LOAD USER
-// =======================
 showUser();
