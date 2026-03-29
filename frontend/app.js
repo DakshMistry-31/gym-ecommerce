@@ -3,7 +3,7 @@
 // =======================
 async function loadProducts() {
   try {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch("https://gym-ecommerce-stjz.onrender.com");
     const data = await res.json();
 
     const container = document.getElementById("products");
